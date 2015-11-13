@@ -30,8 +30,11 @@ namespace AssetBundles
 
             var options = BuildAssetBundleOptions.None;
 
-            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS ||
-                EditorUserBuildSettings.activeBuildTarget == BuildTarget.tvOS)
+            bool shouldCheckODR = EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS;
+#if UNITY_5_3_1
+            shouldCheckODR |= EditorUserBuildSettings.activeBuildTarget == BuildTarget.tvOS)
+#endif
+            if (shouldCheckODR)
             {
 #if ENABLE_IOS_ON_DEMAND_RESOURCES
                 if (PlayerSettings.iOS.useOnDemandResources)
