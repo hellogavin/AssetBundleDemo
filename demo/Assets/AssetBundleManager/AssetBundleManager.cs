@@ -205,6 +205,11 @@ namespace AssetBundles
             return bundle;
         }
 
+    	static public bool IsAssetBundleDownloaded(string assetBundleName)
+    	{
+    		return m_LoadedAssetBundles.ContainsKey(assetBundleName);
+    	}
+
         static public AssetBundleLoadManifestOperation Initialize()
         {
             return Initialize(Utility.GetPlatformName());
