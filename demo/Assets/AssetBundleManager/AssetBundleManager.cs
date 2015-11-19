@@ -237,8 +237,14 @@ namespace AssetBundles
             return operation;
         }
 
+        // Temporarily work around a il2cpp bug
+        static protected void LoadAssetBundle(string assetBundleName)
+        {
+            LoadAssetBundle(assetBundleName, false);
+        }
+            
         // Load AssetBundle and its dependencies.
-        static protected void LoadAssetBundle(string assetBundleName, bool isLoadingAssetBundleManifest = false)
+        static protected void LoadAssetBundle(string assetBundleName, bool isLoadingAssetBundleManifest)
         {
             Log(LogType.Info, "Loading Asset Bundle " + (isLoadingAssetBundleManifest ? "Manifest: " : ": ") + assetBundleName);
 
