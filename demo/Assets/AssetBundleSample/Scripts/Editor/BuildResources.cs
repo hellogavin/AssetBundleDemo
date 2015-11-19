@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.iOS;
 using System.Collections;
+using System.IO;
 
 #if ENABLE_IOS_ON_DEMAND_RESOURCES || ENABLE_IOS_APP_SLICING
 public class BuildResources
@@ -12,19 +13,27 @@ public class BuildResources
         UnityEditor.iOS.BuildPipeline.collectResources += CollectResources;
     }
 
+    static string GetPath(string relativePath)
+    {
+        string root = Path.Combine(AssetBundles.Utility.AssetBundlesOutputPath, 
+                                   AssetBundles.Utility.GetPlatformName());
+        return Path.Combine(root, relativePath);
+    }
+ 
     static UnityEditor.iOS.Resource[] CollectResources()
     {
+        string manifest = AssetBundles.Utility.GetPlatformName();
         return new Resource[]
-               {
-                   new Resource("iOS", "AssetBundles/iOS/iOS").AddOnDemandResourceTags("iOS"),
-                   new Resource("scene.unity3d", "AssetBundles/iOS/scene.unity3d").AddOnDemandResourceTags("scene.unity3d"),
-                   new Resource("cube.unity3d", "AssetBundles/iOS/cube.unity3d").AddOnDemandResourceTags("cube.unity3d"),
-                   new Resource("texture.unity3d", "AssetBundles/iOS/texture.unity3d").AddOnDemandResourceTags("texture.unity3d"),
-                   new Resource("material.unity3d", "AssetBundles/iOS/material.unity3d").AddOnDemandResourceTags("material.unity3d"),
-                   new Resource("variants/variant-scene.unity3d", "AssetBundles/iOS/variants/variant-scene.unity3d").AddOnDemandResourceTags("variants/variant-scene.unity3d"),
-                   new Resource("variants/myassets").BindVariant("AssetBundles/iOS/variants/myassets.hd", "hd")
-                   .BindVariant("AssetBundles/iOS/variants/myassets.sd", "sd")
-               };
+        {
+            new Resource(manifest, GetPath(manifest)).AddOnDemandResourceTags(manifest),
+            new Resource("scene-bundle", GetPath("scene-bundle")).AddOnDemandResourceTags("scene-bundle"),
+            new Resource("cube-bundle", GetPath("cube-bundle")).AddOnDemandResourceTags("cube-bundle"),
+            new Resource("texture-bundle", GetPath("texture-bundle")).AddOnDemandResourceTags("texture-bundle"),
+            new Resource("material-bundle", GetPath("material-bundle")).AddOnDemandResourceTags("material-bundle"),
+            new Resource("variants/variant-scene", GetPath("variants/variant-scene")).AddOnDemandResourceTags("variants/variant-scene"),
+            new Resource("variants/myassets").BindVariant(GetPath("variants/myassets.hd"), "hd")
+                                             .BindVariant(GetPath("variants/myassets.sd"), "sd")
+        };
     }
 }
 #endif
