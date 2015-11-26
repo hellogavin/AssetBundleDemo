@@ -84,6 +84,22 @@ Explanation
 5. The scripts under Assets/ScriptsForAssetBundleSystem folder could be useful
 	for your project. Please feel free to copy/integrate into your own projects.
 
+6. On-demand resource usage on iOS
+	In order to demo on-demand resources, corresponding option must be enabled
+	in the player settings. No other changes are needed.
+
+	After loading scene, you should see something like the following in the
+	Xcode console:
+
+	[AssetBundleManager] Requesting bundle iOS through ODR
+	[AssetBundleManager] Requesting bundle cube-bundle through ODR
+	[AssetBundleManager] Requesting bundle material-bundle through ODR
+
+	The AssetLoader and SceneLoader scenes should result in flying cubes.
+
+	The Variant loader scene should result in different scenes depending on
+	devices: on iPads on should see "High-res" text, and "Low-res" text otherwise.
+
 License
 -------
 
