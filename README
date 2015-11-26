@@ -1,0 +1,116 @@
+
+AssetBundle demo
+----------------
+
+This is asset bundle demo for Unity 5 which demonstrates what we can do in
+the new AssetBundle system. Unity 5.0 beta 21 or later is required.
+
+Explanation
+-----------
+
+1. There're 3 scenes under TestScenes folder:
+	1. AssetLoader.unity demonstrates how to load a normal asset from AssetBundle.
+		Additional information can be found in LoadAssets.cs script.
+	2. SceneLoader.unity demonstrates how to load a scene from AssetBundle.
+		Additional information can be found in LoadScenes.cs script.
+	3. VariantLoader.unity demonstrates how to load variant AssetBundle.
+		Additional information can be found in LoadVariants.cs script.
+
+		AssetBundle variants allow to load different version of the same asset
+		depending on user-defined settings. For example, it's possible to
+		configure low-end devices to use low resolution texture and high-end
+		devices to use high resolution texture.
+
+		In the demo, the following resources are built:
+			1. "My Assets HD" folder into "variant/myassets.hd" AssetBundle.
+				This is "hd" variant of "myassets" asset bundle.
+			2. "My Assets SD" folder into "variant/myassets.sd" AssetBundle.
+				This is "sd" variant of "myassets" asset bundle.
+			3. "variant-scene.unity" into "variants/variant-scene.unity3d".
+				This AssetBundle contains a scene which uses variant asset bundle:
+				either from "myassets.hd" or "myassets.sd".
+
+		Assets within variant asset bundles must match across entire family of
+		variants. That is, if one variant provides an asset, all variants must
+		provide some asset with the same name.
+
+		Variant asset bundles always have an extension, which matches with
+		variant name. E.g. "myassets.hd" asset bundle is "hd" variant of
+		"myassets" asset bundle.
+
+		The active variant may be changed in LoadVariants.cs.
+
+		Please also refer to AssetBundleManager.RemapVariantName() to see how to
+		resolve the correct AssetBundle according to the active variant.
+
+		Asset bundle variants may not be simulated in editor.
+
+2. Download dependent AssetBundles automatically
+	In Unity 5, between AssetBundles are tracked in a single manifest
+	AssetBundle. It's possible to retrieve all dependency names on runtime and
+	download dependency asset bundle automatically with a base url.
+	For more details, see AssetBundleManager.LoadDependencies().
+	
+3. There are 3 menu items under the AssetBundles menu:
+	1. "Simulate AssetBundles" which is used to control AssetBundle simulation
+		in the Editor. In Editor play mode, AssetBundles may be simulated
+		without actually building them.
+	2. "Build AssetBundles" which simply calls BuildPipeline.BuildAssetBundles()
+		to build currently set up AssetBundles.
+		For more details, see BuildScript.BuildAssetBundles().
+	3. "Build Player" which copies the AssetBundles to StreamingAssets folder
+		then build the player data according to the build settings.
+		For more details, see BuildScript.BuildPlayer().
+
+4. AssetBundleManager class which takes of loading AssetBundle and its dependencies.
+	It contains:
+	1. Initialize()
+		Initialize the AssetBundle manifest object.
+	2. LoadAssetAsync()
+		Load a given asset from a given AssetBundle and handle all the dependencies.
+	3. LoadLevelAsync()
+		Load a given scene from a given AssetBundle and handle all the dependencies.
+	4. LoadDependencies()
+		Load all the dependent AssetBundles for a given AssetBundle.
+	5. BaseDownloadingURL
+		Set the base downloading url which is used for dependencies automatic downloading.
+	6. SimulateAssetBundleInEditor
+		Set if simulating AssetBundle in Editor play mode.
+	7. Variants
+		Set the active asset bundle variant.
+	8. RemapVariantName()
+		Resolve the correct AssetBundle according to the active variant.
+	
+5. The scripts under Assets/ScriptsForAssetBundleSystem folder could be useful
+	for your project. Please feel free to copy/integrate into your own projects.
+
+6. On-demand resource usage on iOS
+	In order to demo on-demand resources, corresponding option must be enabled
+	in the player settings. No other changes are needed.
+
+	After loading scene, you should see something like the following in the
+	Xcode console:
+
+	[AssetBundleManager] Requesting bundle iOS through ODR
+	[AssetBundleManager] Requesting bundle cube-bundle through ODR
+	[AssetBundleManager] Requesting bundle material-bundle through ODR
+
+	The AssetLoader and SceneLoader scenes should result in flying cubes.
+
+	The Variant loader scene should result in different scenes depending on
+	devices: on iPads on should see "High-res" text, and "Low-res" text otherwise.
+
+License
+-------
+
+The project is released by Unity Technologies under the MIT/X11 license; see the
+LICENSE file.
+
+This means that you pretty much can customize and embed it in any software under
+any license without any other constraints than preserving the copyright and
+license information while adding your own copyright and license information.
+
+You can keep the source to yourself or share your customized version under a
+compatible license.
+
+
