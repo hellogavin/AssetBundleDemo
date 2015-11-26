@@ -25,8 +25,10 @@ namespace AssetBundles
             {
                 case BuildTarget.Android:
                     return "Android";
+            #if UNITY_5_3_1
                 case BuildTarget.tvOS:
                     return "tvOS";
+            #endif
                 case BuildTarget.iOS:
                     return "iOS";
                 case BuildTarget.WebGL:
@@ -57,8 +59,10 @@ namespace AssetBundles
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
                     return "iOS";
+            #if UNITY_5_3_1
                 case RuntimePlatform.tvOS:
                     return "tvOS";
+            #endif
                 case RuntimePlatform.WebGLPlayer:
                     return "WebGL";
                 case RuntimePlatform.OSXWebPlayer:
