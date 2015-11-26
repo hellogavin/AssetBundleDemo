@@ -28,7 +28,6 @@ public class BuildResources
             new Resource(manifest, GetPath(manifest)).AddOnDemandResourceTags(manifest),
             new Resource("scene-bundle", GetPath("scene-bundle")).AddOnDemandResourceTags("scene-bundle"),
             new Resource("cube-bundle", GetPath("cube-bundle")).AddOnDemandResourceTags("cube-bundle"),
-            new Resource("texture-bundle", GetPath("texture-bundle")).AddOnDemandResourceTags("texture-bundle"),
             new Resource("material-bundle", GetPath("material-bundle")).AddOnDemandResourceTags("material-bundle"),
             new Resource("variants/variant-scene", GetPath("variants/variant-scene")).AddOnDemandResourceTags("variants/variant-scene"),
             new Resource("variants/myassets").BindVariant(GetPath("variants/myassets.hd"), "hd")
