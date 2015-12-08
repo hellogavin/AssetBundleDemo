@@ -65,6 +65,8 @@ namespace AssetBundles
     }
 
 #if ENABLE_IOS_ON_DEMAND_RESOURCES
+    // Read asset bundle asynchronously from iOS / tvOS asset catalog that is downloaded
+    // using on demand resources functionality.
     public class AssetBundleDownloadFromODROperation : AssetBundleDownloadOperation
     {
         OnDemandResourcesRequest request;
@@ -113,7 +115,7 @@ namespace AssetBundles
 #endif
 
 #if ENABLE_IOS_APP_SLICING
-    // Read asset bundle synchronously from an asset catalog
+    // Read asset bundle synchronously from an iOS / tvOS asset catalog
     public class AssetBundleOpenFromAssetCatalogOperation : AssetBundleDownloadOperation
     {
         public AssetBundleOpenFromAssetCatalogOperation(string assetBundleName)
