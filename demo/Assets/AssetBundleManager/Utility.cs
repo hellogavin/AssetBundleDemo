@@ -25,7 +25,7 @@ namespace AssetBundles
             {
                 case BuildTarget.Android:
                     return "Android";
-            #if UNITY_5_3_1
+            #if UNITY_TVOS
                 case BuildTarget.tvOS:
                     return "tvOS";
             #endif

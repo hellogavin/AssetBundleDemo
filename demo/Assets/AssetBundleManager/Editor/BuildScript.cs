@@ -31,8 +31,8 @@ namespace AssetBundles
             var options = BuildAssetBundleOptions.None;
 
             bool shouldCheckODR = EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS;
-#if UNITY_5_3_1
-            shouldCheckODR |= EditorUserBuildSettings.activeBuildTarget == BuildTarget.tvOS)
+#if UNITY_TVOS
+            shouldCheckODR |= EditorUserBuildSettings.activeBuildTarget == BuildTarget.tvOS;
 #endif
             if (shouldCheckODR)
             {
