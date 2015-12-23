@@ -319,7 +319,8 @@ namespace AssetBundles
         {
 #if ENABLE_IOS_APP_SLICING
             var url = GetAssetBundleBaseDownloadingURL(baseAssetBundleName);
-            if (url.ToLower().StartsWith("res://"))
+            if (url.ToLower().StartsWith("res://") ||
+                url.ToLower().StartsWith("odr://"))
                 return true;
 #endif
             return false;

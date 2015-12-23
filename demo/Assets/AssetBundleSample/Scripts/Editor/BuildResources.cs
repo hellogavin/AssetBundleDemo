@@ -31,7 +31,8 @@ public class BuildResources
             new Resource("material-bundle", GetPath("material-bundle")).AddOnDemandResourceTags("material-bundle"),
             new Resource("variants/variant-scene", GetPath("variants/variant-scene")).AddOnDemandResourceTags("variants/variant-scene"),
             new Resource("variants/myassets").BindVariant(GetPath("variants/myassets.hd"), "hd")
-                                             .BindVariant(GetPath("variants/myassets.sd"), "sd"),
+                                             .BindVariant(GetPath("variants/myassets.sd"), "sd")
+                                             .AddOnDemandResourceTags("variants/myassets"),
             new Resource("variants/logo").BindVariant(GetPath("variants/logo.hd"), "hd")
                                          .BindVariant(GetPath("variants/logo.sd"), "sd")
         };
