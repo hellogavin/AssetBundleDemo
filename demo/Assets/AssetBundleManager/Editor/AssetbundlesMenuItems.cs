@@ -28,7 +28,7 @@ namespace AssetBundles
         }
 
         [MenuItem ("Assets/AssetBundles/Build Player (for use with engine code stripping)")]
-        static public void BuildPalyer ()
+        static public void BuildPlayer ()
         {
             BuildScript.BuildPlayer();
         }
