@@ -100,8 +100,13 @@ namespace AssetBundles
             BuildScript.BuildAssetBundles();
             WriteServerURL();
 
-            BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
-            BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+            buildPlayerOptions.levels = levels;
+            buildPlayerOptions.locationPathName = outputPath + targetName;
+            buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
+            buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
+            buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;;
+            BuildPipeline.BuildPlayer(buildPlayerOptions);
         }
 
         public static void BuildStandalonePlayer()
@@ -126,8 +131,13 @@ namespace AssetBundles
             BuildScript.CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath));
             AssetDatabase.Refresh();
 
-            BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
-            BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+            BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
+            buildPlayerOptions.levels = levels;
+            buildPlayerOptions.locationPathName = outputPath + targetName;
+            buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
+            buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
+            buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(buildPlayerOptions);
         }
 
         public static string GetBuildTargetName(BuildTarget target)
@@ -146,6 +156,7 @@ namespace AssetBundles
                 case BuildTarget.WebPlayer:
                 case BuildTarget.WebPlayerStreamed:
                 case BuildTarget.WebGL:
+                case BuildTarget.iOS:
                     return "";
                 // Add more build targets for your own.
                 default:
@@ -185,6 +196,12 @@ namespace AssetBundles
             }
 
             return levels.ToArray();
+        }
+
+        static string GetAssetBundleManifestFilePath()
+        {
+            var absoluteAssetBundlesOutputPathForPlatform = Path.Combine(Path.Combine(Path.Combine(Application.dataPath, ".."), Utility.AssetBundlesOutputPath), Utility.GetPlatformName());
+            return Path.Combine(absoluteAssetBundlesOutputPathForPlatform,  Utility.GetPlatformName()) + ".manifest";
         }
     }
 }
