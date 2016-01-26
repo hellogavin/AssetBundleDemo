@@ -200,8 +200,8 @@ namespace AssetBundles
 
         static string GetAssetBundleManifestFilePath()
         {
-            var absoluteAssetBundlesOutputPathForPlatform = Path.Combine(Path.Combine(Path.Combine(Application.dataPath, ".."), Utility.AssetBundlesOutputPath), Utility.GetPlatformName());
-            return Path.Combine(absoluteAssetBundlesOutputPathForPlatform,  Utility.GetPlatformName()) + ".manifest";
+            var relativeAssetBundlesOutputPathForPlatform = Path.Combine(Utility.AssetBundlesOutputPath, Utility.GetPlatformName());
+            return Path.Combine(relativeAssetBundlesOutputPathForPlatform,  Utility.GetPlatformName()) + ".manifest";
         }
     }
 }
