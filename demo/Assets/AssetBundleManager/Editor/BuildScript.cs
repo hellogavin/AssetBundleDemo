@@ -100,13 +100,18 @@ namespace AssetBundles
             BuildScript.BuildAssetBundles();
             WriteServerURL();
 
+#if UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1 || UNITY_5_0
+            BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+#else
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
             buildPlayerOptions.levels = levels;
             buildPlayerOptions.locationPathName = outputPath + targetName;
             buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
             buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
-            buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;;
+            buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
             BuildPipeline.BuildPlayer(buildPlayerOptions);
+#endif
         }
 
         public static void BuildStandalonePlayer()
@@ -131,6 +136,10 @@ namespace AssetBundles
             BuildScript.CopyAssetBundlesTo(Path.Combine(Application.streamingAssetsPath, Utility.AssetBundlesOutputPath));
             AssetDatabase.Refresh();
 
+#if UNITY_5_4 || UNITY_5_3 || UNITY_5_2 || UNITY_5_1 || UNITY_5_0
+            BuildOptions option = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
+            BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
+#else
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
             buildPlayerOptions.levels = levels;
             buildPlayerOptions.locationPathName = outputPath + targetName;
@@ -138,6 +147,7 @@ namespace AssetBundles
             buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
             buildPlayerOptions.options = EditorUserBuildSettings.development ? BuildOptions.Development : BuildOptions.None;
             BuildPipeline.BuildPlayer(buildPlayerOptions);
+#endif
         }
 
         public static string GetBuildTargetName(BuildTarget target)
