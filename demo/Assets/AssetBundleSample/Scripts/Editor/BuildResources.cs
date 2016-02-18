@@ -34,7 +34,17 @@ public class BuildResources
                                              .BindVariant(GetPath("variants/myassets.sd"), "sd")
                                              .AddOnDemandResourceTags("variants/myassets"),
             new Resource("variants/logo").BindVariant(GetPath("variants/logo.hd"), "hd")
-                                         .BindVariant(GetPath("variants/logo.sd"), "sd")
+                                         .BindVariant(GetPath("variants/logo.sd"), "sd"),
+            /*  Note that in the tanks scene dynamic asset bundle variant selection
+                is demonstrated, which is not possible with ODR (the asset bundle
+                variants may only depend on the hardware features of the devices).
+                We only ensure that the required asset bundles are available.
+
+                Please test the scene without ODR
+            */
+            new Resource("banner", GetPath("banner.english")).AddOnDemandResourceTags("banner"),
+            new Resource("tanks-scene-bundle", GetPath("tanks-scene-bundle")).AddOnDemandResourceTags("tanks-scene-bundle"),
+            new Resource("tanks-albedo", GetPath("tanks-albedo.normal-sd")).AddOnDemandResourceTags("tanks-albedo")
         };
     }
 }

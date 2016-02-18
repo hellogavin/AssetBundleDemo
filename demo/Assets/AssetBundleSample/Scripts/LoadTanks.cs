@@ -2,7 +2,10 @@ using UnityEngine;
 using System.Collections;
 using AssetBundles;
 
-
+/*  On iOS with ODR it's not possible to demonstrate dynamic asset bundle
+    variant selection which is shown in this scene. Please use the 
+    development asset server instead of ODR on iOS
+*/
 public class LoadTanks : MonoBehaviour
 {
     public string sceneAssetBundle;
