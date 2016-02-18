@@ -73,7 +73,7 @@ see explanation in the AssetBundleManager.cs file.
 Scenes
 ------
 
-There're 3 scenes under Assets/TestScenes folder:
+There're 4 scenes under Assets/TestScenes folder:
 
 AssetLoader.unity
     Demonstrates how to load a normal asset from asset bundle.
@@ -115,6 +115,11 @@ VariantLoader.unity
     resolve the correct AssetBundle according to the active variant.
 
     Asset bundle variants may not be simulated in editor.
+
+TanksLoader.unity
+    Demonstrates how to load different variant asset bundles dynamically.
+
+    On iOS this scene works properly only if on-demand resources are disabled.
 
 On-demand resource and App slicing usage on iOS
 -------------------------------
