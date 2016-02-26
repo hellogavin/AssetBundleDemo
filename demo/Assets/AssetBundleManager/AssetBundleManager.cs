@@ -206,8 +206,8 @@ namespace AssetBundles
             // Make sure all dependencies are loaded
             foreach (var dependency in dependencies)
             {
-                if (m_DownloadingErrors.TryGetValue(assetBundleName, out error))
-                    return bundle;
+                if (m_DownloadingErrors.TryGetValue(dependency, out error))
+                    return null;
 
                 // Wait all the dependent assetBundles being loaded.
                 LoadedAssetBundle dependentBundle;
