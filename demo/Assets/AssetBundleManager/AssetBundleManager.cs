@@ -418,6 +418,12 @@ namespace AssetBundles
             else
             {
                 WWW download = null;
+
+                if (!bundleBaseDownloadingURL.EndsWith("/"))
+                {
+                    bundleBaseDownloadingURL += "/";
+                }
+
                 string url = bundleBaseDownloadingURL + assetBundleName;
 
                 // For manifest assetbundle, always download it as we don't have hash for it.
