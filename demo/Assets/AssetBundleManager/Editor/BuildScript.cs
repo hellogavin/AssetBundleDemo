@@ -105,7 +105,7 @@ namespace AssetBundles
             BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
 #else
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-            buildPlayerOptions.levels = levels;
+            buildPlayerOptions.scenes = levels;
             buildPlayerOptions.locationPathName = outputPath + targetName;
             buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
             buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
@@ -141,7 +141,7 @@ namespace AssetBundles
             BuildPipeline.BuildPlayer(levels, outputPath + targetName, EditorUserBuildSettings.activeBuildTarget, option);
 #else
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-            buildPlayerOptions.levels = levels;
+            buildPlayerOptions.scenes = levels;
             buildPlayerOptions.locationPathName = outputPath + targetName;
             buildPlayerOptions.assetBundleManifestPath = GetAssetBundleManifestFilePath();
             buildPlayerOptions.target = EditorUserBuildSettings.activeBuildTarget;
