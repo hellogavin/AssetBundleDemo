@@ -161,6 +161,11 @@ namespace AssetBundles
         // absolutePath/iOS/xyz-scene.
         public static void SetSourceAssetBundleURL(string absolutePath)
         {
+            if (!absolutePath.EndsWith("/"))
+            {
+                absolutePath += "/";
+            }
+
             BaseDownloadingURL = absolutePath + Utility.GetPlatformName() + "/";
         }
 
