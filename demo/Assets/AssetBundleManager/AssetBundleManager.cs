@@ -29,7 +29,10 @@ using System.Collections.Generic;
 
 namespace AssetBundles
 {
-    // Loaded assetBundle contains the references count which can be used to unload dependent assetBundles automatically.
+    /// <summary>
+    /// Loaded assetBundle contains the references count which can be used to
+    /// unload dependent assetBundles automatically.
+    /// </summary>
     public class LoadedAssetBundle
     {
         public AssetBundle m_AssetBundle;
@@ -51,7 +54,10 @@ namespace AssetBundles
         }
     }
 
-    // Class takes care of loading assetBundle and its dependencies automatically, loading variants automatically.
+    /// <summary>
+    /// Class takes care of loading assetBundle and its dependencies
+    /// automatically, loading variants automatically.
+    /// </summary>
     public class AssetBundleManager : MonoBehaviour
     {
         public enum LogMode { All, JustErrors };
@@ -78,7 +84,10 @@ namespace AssetBundles
             set { m_LogMode = value; }
         }
 
-        // The base downloading url which is used to generate the full downloading url with the assetBundle names.
+        /// <summary>
+        /// The base downloading url which is used to generate the full
+        /// downloading url with the assetBundle names.
+        /// </summary>
         public static string BaseDownloadingURL
         {
             get { return m_BaseDownloadingURL; }
@@ -87,19 +96,25 @@ namespace AssetBundles
 
         public delegate string OverrideBaseDownloadingURLDelegate(string bundleName);
 
-        // Implements per-bundle base downloading URL override. The subscribers must return
-        // null values for unknown bundle names;
+        /// <summary>
+        /// Implements per-bundle base downloading URL override.
+        /// The subscribers must return null values for unknown bundle names;
+        /// </summary>
         public static event OverrideBaseDownloadingURLDelegate overrideBaseDownloadingURL;
 
-        // Variants which is used to define the active variants.
+        /// <summary>
+        /// Variants which is used to define the active variants.
+        /// </summary>
         public static string[] ActiveVariants
         {
             get { return m_ActiveVariants; }
             set { m_ActiveVariants = value; }
         }
 
-        // AssetBundleManifest object which can be used to load the dependecies 
-        // and check suitable assetBundle variants.
+        /// <summary>
+        /// AssetBundleManifest object which can be used to load the dependecies
+        /// and check suitable assetBundle variants.
+        /// </summary>
         public static AssetBundleManifest AssetBundleManifestObject
         {
             set {m_AssetBundleManifest = value; }
@@ -114,7 +129,9 @@ namespace AssetBundles
         }
 
     #if UNITY_EDITOR
-        // Flag to indicate if we want to simulate assetBundles in Editor without building them actually.
+        /// <summary>
+        /// Flag to indicate if we want to simulate assetBundles in Editor without building them actually.
+        /// </summary>
         public static bool SimulateAssetBundleInEditor
         {
             get
@@ -148,17 +165,24 @@ namespace AssetBundles
                 return "file://" +  Application.streamingAssetsPath;
         }
 
-        // Sets base downloading URL to a directory relative to the streaming assets directory.
-        // Asset bundles are loaded from a local directory.
+      
+        /// <summary>
+        /// Sets base downloading URL to a directory relative to the streaming assets directory.
+        /// Asset bundles are loaded from a local directory.
+        /// </summary>
         public static void SetSourceAssetBundleDirectory(string relativePath)
         {
             BaseDownloadingURL = GetStreamingAssetsPath() + relativePath;
         }
 
-        // Sets base downloading URL to a web URL. The directory pointed to by this URL
-        // on the web-server should have the same structure as the AssetBundles directory
-        // in the demo project root. For example, AssetBundles/iOS/xyz-scene must map to
-        // absolutePath/iOS/xyz-scene.
+        /// <summary>
+        /// Sets base downloading URL to a web URL. The directory pointed to by this URL
+        /// on the web-server should have the same structure as the AssetBundles directory
+        /// in the demo project root.
+        /// </summary>
+        /// <example>For example, AssetBundles/iOS/xyz-scene must map to
+        /// absolutePath/iOS/xyz-scene.
+        /// <example>
         public static void SetSourceAssetBundleURL(string absolutePath)
         {
             if (!absolutePath.EndsWith("/"))
@@ -169,7 +193,9 @@ namespace AssetBundles
             BaseDownloadingURL = absolutePath + Utility.GetPlatformName() + "/";
         }
 
-        // Sets base downloading URL to a local development server URL.
+        /// <summary>
+        /// Sets base downloading URL to a local development server URL.
+        /// </summary>
         public static void SetDevelopmentAssetBundleServer()
         {
             #if UNITY_EDITOR
@@ -191,8 +217,10 @@ namespace AssetBundles
             }
         }
 
-        // Retrieves an asset bundle that has previously been requested via LoadAssetBundle.
-        // Returns null if the asset bundle or one of its dependencies have not been downloaded yet.
+        /// <summary>
+        /// Retrieves an asset bundle that has previously been requested via LoadAssetBundle.
+        /// Returns null if the asset bundle or one of its dependencies have not been downloaded yet.
+        /// </summary>
         static public LoadedAssetBundle GetLoadedAssetBundle(string assetBundleName, out string error)
         {
             if (m_DownloadingErrors.TryGetValue(assetBundleName, out error))
@@ -224,22 +252,29 @@ namespace AssetBundles
             return bundle;
         }
 
-        // Returns true if certain asset bundle has been downloaded without checking
-        // whether the dependencies have been loaded.
+        /// <summary>
+        /// Returns true if certain asset bundle has been downloaded without checking
+        /// whether the dependencies have been loaded.
+        /// </summary>
         static public bool IsAssetBundleDownloaded(string assetBundleName)
         {
             return m_LoadedAssetBundles.ContainsKey(assetBundleName);
         }
 
-        // Initializes asset bundle namager and starts download of manifest asset bundle.
-        // Returns the manifest asset bundle downolad operation object.
+
+        /// <summary>
+        /// Initializes asset bundle namager and starts download of manifest asset bundle.
+        /// Returns the manifest asset bundle downolad operation object.
+        /// </summary>
         static public AssetBundleLoadManifestOperation Initialize()
         {
             return Initialize(Utility.GetPlatformName());
         }
 
-        // Initializes asset bundle namager and starts download of manifest asset bundle.
-        // Returns the manifest asset bundle downolad operation object.
+        /// <summary>
+        /// Initializes asset bundle namager and starts download of manifest asset bundle.
+        /// Returns the manifest asset bundle downolad operation object.
+        /// </summary>
         static public AssetBundleLoadManifestOperation Initialize(string manifestAssetBundleName)
         {
     #if UNITY_EDITOR
@@ -467,7 +502,9 @@ namespace AssetBundles
                 LoadAssetBundleInternal(dependencies[i], false);
         }
 
-        // Unloads assetbundle and its dependencies.
+        /// <summary>
+        /// Unloads assetbundle and its dependencies.
+        /// </summary>
         static public void UnloadAssetBundle(string assetBundleName)
         {
     #if UNITY_EDITOR
@@ -551,7 +588,9 @@ namespace AssetBundles
             m_DownloadingBundles.Remove(download.assetBundleName);
         }
 
-        // Starts a load operation for an asset from the given asset bundle.
+        /// <summary>
+        /// Starts a load operation for an asset from the given asset bundle.
+        /// </summary>
         static public AssetBundleLoadAssetOperation LoadAssetAsync(string assetBundleName, string assetName, System.Type type)
         {
             Log(LogType.Info, "Loading " + assetName + " from " + assetBundleName + " bundle");
@@ -584,7 +623,9 @@ namespace AssetBundles
             return operation;
         }
 
-        // Starts a load operation for a level from the given asset bundle.
+        /// <summary>
+        /// Starts a load operation for a level from the given asset bundle.
+        /// </summary>
         static public AssetBundleLoadOperation LoadLevelAsync(string assetBundleName, string levelName, bool isAdditive)
         {
             Log(LogType.Info, "Loading " + levelName + " from " + assetBundleName + " bundle");
