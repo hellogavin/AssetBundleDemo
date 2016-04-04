@@ -161,6 +161,11 @@ namespace AssetBundles
         // absolutePath/iOS/xyz-scene.
         public static void SetSourceAssetBundleURL(string absolutePath)
         {
+            if (!absolutePath.EndsWith("/"))
+            {
+                absolutePath += "/";
+            }
+
             BaseDownloadingURL = absolutePath + Utility.GetPlatformName() + "/";
         }
 
@@ -206,8 +211,8 @@ namespace AssetBundles
             // Make sure all dependencies are loaded
             foreach (var dependency in dependencies)
             {
-                if (m_DownloadingErrors.TryGetValue(assetBundleName, out error))
-                    return bundle;
+                if (m_DownloadingErrors.TryGetValue(dependency, out error))
+                    return null;
 
                 // Wait all the dependent assetBundles being loaded.
                 LoadedAssetBundle dependentBundle;
@@ -418,6 +423,12 @@ namespace AssetBundles
             else
             {
                 WWW download = null;
+
+                if (!bundleBaseDownloadingURL.EndsWith("/"))
+                {
+                    bundleBaseDownloadingURL += "/";
+                }
+
                 string url = bundleBaseDownloadingURL + assetBundleName;
 
                 // For manifest assetbundle, always download it as we don't have hash for it.
