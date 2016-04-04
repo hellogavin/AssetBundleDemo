@@ -77,7 +77,9 @@ namespace AssetBundles
         public AssetBundleDownloadFromODROperation(string assetBundleName)
             : base(assetBundleName)
         {
-            request = OnDemandResources.PreloadAsync(new string[] { assetBundleName });
+            // Work around Xcode crash when opening Resources tab when a 
+            // resource name contains slash character
+            request = OnDemandResources.PreloadAsync(new string[] { assetBundleName.Replace('/', '>') });
         }
 
         protected override bool downloadIsDone { get { return (request == null) || request.isDone; } }

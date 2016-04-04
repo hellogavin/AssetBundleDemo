@@ -73,7 +73,7 @@ see explanation in the AssetBundleManager.cs file.
 Scenes
 ------
 
-There're 3 scenes under Assets/TestScenes folder:
+There're 4 scenes under Assets/TestScenes folder:
 
 AssetLoader.unity
     Demonstrates how to load a normal asset from asset bundle.
@@ -116,11 +116,16 @@ VariantLoader.unity
 
     Asset bundle variants may not be simulated in editor.
 
-On-demand resource usage on iOS
+TanksLoader.unity
+    Demonstrates how to load different variant asset bundles dynamically.
+
+    On iOS this scene works properly only if on-demand resources are disabled.
+
+On-demand resource and App slicing usage on iOS
 -------------------------------
 
-In order to demo on-demand resources, corresponding option must be enabled
-in the player settings. No other changes are needed.
+In order to demo on-demand resources or app slicing, corresponding option must
+be enabled in the player settings. No other changes are needed.
 
 After loading scene, you should see something like the following in the
 Xcode console:
@@ -133,6 +138,8 @@ The AssetLoader and SceneLoader scenes should result in flying cubes.
 
 The Variant loader scene should result in different scenes depending on
 devices: on iPads on should see "High-res" text, and "Low-res" text otherwise.
+This scene demonstrates sliced resources that are loaded both on-demand and
+statically included into initial application bundle.
 
 License
 -------

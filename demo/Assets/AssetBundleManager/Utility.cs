@@ -59,7 +59,7 @@ namespace AssetBundles
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
                     return "iOS";
-            #if UNITY_5_3_1
+            #if UNITY_TVOS
                 case RuntimePlatform.tvOS:
                     return "tvOS";
             #endif

@@ -21,11 +21,16 @@ public class LoadVariants : MonoBehaviour
     }
 
     #if ENABLE_IOS_ON_DEMAND_RESOURCES
+    
+    /*  On iOS it's not possible to load different asset bundle variants on demand.
+        We load asset bundle variant in the same way as usual asset bundle. Depending
+        on whether we use ODR or not App Store will serve us correct resource on demand,
+        or the resource will be already downloaded within the asset catalog.
+    */
     void Start()
     {
         StartCoroutine(BeginExample());
     }
-
     #else
     void OnGUI()
     {
@@ -73,14 +78,11 @@ public class LoadVariants : MonoBehaviour
     // eg. Development server / iOS ODR / web URL
     void InitializeSourceURL()
     {
-        #if ENABLE_IOS_APP_SLICING
-        AssetBundleManager.overrideBaseDownloadingURL += OverrideAppSlicingDownloadingURL;
-        #endif
-
         // If ODR is available and enabled, then use it and let Xcode handle download requests.
         #if ENABLE_IOS_ON_DEMAND_RESOURCES
         if (UnityEngine.iOS.OnDemandResources.enabled)
         {
+            AssetBundleManager.overrideBaseDownloadingURL += OverrideDownloadingURLForLocalBundles;
             AssetBundleManager.SetSourceAssetBundleURL("odr://");
             return;
         }
@@ -100,12 +102,13 @@ public class LoadVariants : MonoBehaviour
         #endif
     }
 
-    #if ENABLE_IOS_APP_SLICING
-    List<string> variantBundles = new List<string>{ "variants/myassets" };
+    #if ENABLE_IOS_ON_DEMAND_RESOURCES
+    // The following asset bundles do not use ODR
+    List<string> localBundles = new List<string>{ "variants/logo" };
 
-    protected string OverrideAppSlicingDownloadingURL(string baseAssetBundleName)
+    protected string OverrideDownloadingURLForLocalBundles(string baseAssetBundleName)
     {
-        if (variantBundles.Contains(baseAssetBundleName))
+        if (localBundles.Contains(baseAssetBundleName))
             return "res://";
         return null;
     }
